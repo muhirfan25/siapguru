@@ -1,0 +1,93 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'pbmirfan81@gmail.com'
+      );
+    }
+
+    // 1. Koleksi Pengguna (users)
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // 2. Koleksi Sekolah (sekolah)
+    match /sekolah/{sekolahId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // 3. Koleksi Data Guru (dapat dibaca untuk otentikasi login NIP guru)
+    match /data_guru/{guruId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || isSuperAdmin();
+    }
+
+    // 4. Koleksi Data Siswa
+    match /data_siswa/{siswaId} {
+      allow read, write: if true;
+    }
+
+    // 5. Koleksi Mata Pelajaran
+    match /mapel/{mapelId} {
+      allow read, write: if true;
+    }
+
+    // 6. Koleksi Jadwal Mengajar
+    match /jadwal/{jadwalId} {
+      allow read, write: if true;
+    }
+
+    // 7. Koleksi Log Absensi Siswa
+    match /log_absensi/{absenId} {
+      allow read, write: if true;
+    }
+
+    // 8. Koleksi Data Nilai Siswa
+    match /data_nilai/{nilaiId} {
+      allow read, write: if true;
+    }
+
+    // 9. Koleksi Jurnal & Agenda Mengajar
+    match /jurnal_agenda/{agendaId} {
+      allow read, write: if true;
+    }
+
+    // 10. Koleksi Bimbingan Wali Kelas
+    match /siswa_bimbingan/{bimbinganId} {
+      allow read, write: if true;
+    }
+
+    match /bimbingan_wali/{bimbinganId} {
+      allow read, write: if true;
+    }
+
+    // 11. Koleksi Catatan Guru & Arsip Perangkat
+    match /catatan_guru/{catatanId} {
+      allow read, write: if true;
+    }
+
+    match /arsip_perangkat/{arsipId} {
+      allow read, write: if true;
+    }
+
+    // 12. Koleksi Pengaturan (Profil & Kop Surat Sekolah)
+    match /pengaturan/{configId} {
+      allow read, write: if true;
+    }
+
+    // 13. Koneksi Uji / Ping
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+  }
+}

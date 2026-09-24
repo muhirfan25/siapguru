@@ -1,0 +1,3 @@
+sed -i 's/<p className="text-slate-500 text-xs">Manajemen Catatan yang dapat dikelola dan diperbaharui oleh Guru (Judul catatan, kategori, isi catatan, dan Tindakan).<\/p>/<p className="text-slate-500 text-xs">Manajemen Catatan yang dapat dikelola dan diperbaharui oleh Guru, didalamnya menu ini ada Judul catatan, kategori, isi catatan dan Tindakan yang akan di lakukan oleh guru<\/p>/g' src/components/LandingPageView.tsx
+
+sed -i 's/<p className="text-slate-500 text-xs">Arsip repositori drive perangkat pembelajaran.<\/p>/<p className="text-slate-500 text-xs">Arsip repositori drive perangkat pembelajaran yang dapat diakses untuk melihat RPP yang telah di unggah di google drive<\/p>/g' src/components/LandingPageView.tsx

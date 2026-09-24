@@ -1,0 +1,2 @@
+s/<button onClick={onLoginClick} className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-xl shadow-indigo-200 transition-all hover:scale-\[1.02\] text-center">/<button onClick={() => setIsRegisterModalOpen(true)} className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-xl shadow-indigo-200 transition-all hover:scale-\[1.02\] text-center">/g
+s/Mulai Sekarang/Daftar Sekarang/g
