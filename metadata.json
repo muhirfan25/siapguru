@@ -1,6 +1,6 @@
 {
-  "name": "SIAGAT (Sistem Integrasi Administrasi Guru Terpadu)",
-  "description": "Sistem Administrasi Guru Digital terintegrasi Asisten AI dan Firebase Database.",
+  "name": "SIAP GURU (Sistem Informasi Administrasi & Perangkat Guru)",
+  "description": "SIAP GURU - Sistem Informasi Administrasi & Perangkat Guru. Menegaskan guru selalu dalam kondisi siap mengajar, supervisi, dan berkas administrasi siap cetak.",
   "requestFramePermissions": [
     "camera"
   ],
