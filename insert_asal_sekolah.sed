@@ -1,2 +1,0 @@
-/<div><label className="block text-sm font-bold text-slate-700 mb-2">No HP\/WA<\/label>/i\
-                <div><label className="block text-sm font-bold text-slate-700 mb-2">Asal Sekolah</label><input type="text" required value={regData.asalSekolah} onChange={e => setRegData({...regData, asalSekolah: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" placeholder="Nama Sekolah (misal: SMAN 1 Jakarta)" /></div>

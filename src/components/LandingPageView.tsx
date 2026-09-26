@@ -102,181 +102,82 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute top-1/3 right-10 w-96 h-96 bg-indigo-200/40 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Compelling Sales & Value Proposition */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 border border-indigo-200 text-indigo-900 text-xs sm:text-sm font-bold shadow-xs">
-                <Sparkles className="w-4 h-4 text-blue-600" />
-                <span>Asisten Cerdas #1 Pendidik Indonesia &bull; Berbasis AI Terpadu</span>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 border border-indigo-200 text-indigo-900 text-xs sm:text-sm font-bold shadow-xs mx-auto">
+              <Sparkles className="w-4 h-4 text-blue-600" />
+              <span>Asisten Cerdas #1 Pendidik Indonesia &bull; Berbasis AI Terpadu</span>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight tracking-tight text-center">
+              Mengajar dengan tenang, administrasi selalu siap di genggaman.<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700">
+                Jadilah Guru yang Selalu SIAP!
+              </span>
+            </h1>
+
+            <div className="space-y-3 max-w-3xl mx-auto text-center">
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-xs font-bold tracking-wide uppercase">SIAP GURU</span>
+                <span className="text-base sm:text-lg font-bold text-slate-800">Sistem Informasi Administrasi &amp; Perangkat Guru</span>
               </div>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                Solusi <em>all-in-one</em> terpadu agar guru selalu <strong>siap mengajar di kelas</strong>, <strong>siap menghadapi supervisi</strong>, dan berkas administrasi <strong>selalu siap cetak</strong> kapan saja tanpa lembur mendadak. Rancang Modul Ajar Deep Learning, CP-TP-ATP, presensi, hingga cetak laporan resmi ber-KOP A4 hanya dalam hitungan detik.
+              </p>
+            </div>
 
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight tracking-tight">
-                Hentikan Lembur Administrasi.<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700">
-                  Jadilah Guru yang Selalu SIAP!
-                </span>
-              </h1>
-
-              <div className="space-y-3">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-xs font-bold tracking-wide uppercase">SIAP GURU</span>
-                  <span className="text-base sm:text-lg font-bold text-slate-800">Sistem Informasi Administrasi &amp; Perangkat Guru</span>
-                </div>
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                  Solusi <em>all-in-one</em> terpadu agar guru selalu <strong>siap mengajar di kelas</strong>, <strong>siap menghadapi supervisi</strong>, dan berkas administrasi <strong>selalu siap cetak</strong> kapan saja tanpa lembur mendadak. Rancang Modul Ajar Deep Learning, CP-TP-ATP, presensi, hingga cetak laporan resmi ber-KOP A4 hanya dalam hitungan detik.
-                </p>
+            {/* Value Pills Checklist */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 max-w-2xl mx-auto text-left">
+              <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
+                <Zap className="w-5 h-5 text-amber-500 shrink-0" />
+                <span>5 Menit Rancang Perangkat Ajar</span>
               </div>
-
-              {/* Value Pills Checklist */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
-                  <Zap className="w-5 h-5 text-amber-500 shrink-0" />
-                  <span>5 Menit Rancang Perangkat Ajar</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
-                  <Printer className="w-5 h-5 text-blue-600 shrink-0" />
-                  <span>Cetak PDF Resmi A4 Ber-KOP Sekolah</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                  <span>100% Pedoman Kurikulum Merdeka</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
-                  <Clock className="w-5 h-5 text-purple-600 shrink-0" />
-                  <span>Hemat 15+ Jam Waktu Setiap Minggu</span>
-                </div>
+              <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
+                <Printer className="w-5 h-5 text-blue-600 shrink-0" />
+                <span>Cetak PDF Resmi A4 Ber-KOP Sekolah</span>
               </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
-                <button 
-                  onClick={() => setIsRegisterModalOpen(true)} 
-                  className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white font-bold rounded-xl shadow-xl shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.99] text-center cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <span>Daftar Sekarang</span>
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-                <a 
-                  href="#fitur-ai" 
-                  className="w-full sm:w-auto px-7 py-4 bg-white hover:bg-indigo-50/60 border border-indigo-200 text-slate-800 font-bold rounded-xl transition-all text-center flex items-center justify-center gap-2 shadow-xs cursor-pointer hover:border-indigo-300"
-                >
-                  <Play className="w-4 h-4 text-indigo-600" fill="currentColor" /> 
-                  <span>Eksplorasi Fitur AI</span>
-                </a>
+              <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                <span>Sesuai Kurikulum dan Pembelajaran mendalam</span>
               </div>
-
-              {/* Trust Badge */}
-              <div className="flex items-center gap-4 text-xs text-slate-500 pt-2">
-                <span className="flex items-center gap-1 font-semibold text-slate-700">
-                  <Check className="w-4 h-4 text-emerald-600" /> Tanpa Instalasi Software
-                </span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="flex items-center gap-1 font-semibold text-slate-700">
-                  <Check className="w-4 h-4 text-emerald-600" /> Akses Cloud Laptop & HP
-                </span>
-                <span className="text-slate-300">&bull;</span>
-                <span className="flex items-center gap-1 font-semibold text-slate-700">
-                  <Check className="w-4 h-4 text-emerald-600" /> Dukungan Teknis 24/7
-                </span>
+              <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200 shadow-xs">
+                <Clock className="w-5 h-5 text-purple-600 shrink-0" />
+                <span>Hemat 15+ Jam Waktu Setiap Minggu</span>
               </div>
             </div>
 
-            {/* Right Column: Aesthetic SIAP GURU (SG) Showcase Emblem */}
-            <div className="lg:col-span-5 flex justify-center relative">
-              {/* Outer decorative card */}
-              <div className="w-full max-w-md relative bg-gradient-to-br from-white/95 via-indigo-50/40 to-white/95 backdrop-blur-xl border border-indigo-100/90 rounded-3xl p-7 sm:p-8 shadow-2xl shadow-indigo-500/15 relative overflow-hidden group">
-                
-                {/* Ambient glow effect inside card */}
-                <div className="absolute -top-12 -right-12 w-48 h-48 bg-gradient-to-br from-cyan-400/20 via-blue-500/20 to-purple-500/30 rounded-full blur-2xl pointer-events-none group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-300/20 rounded-full blur-2xl pointer-events-none"></div>
-
-                {/* Top Corner Badge: SG Verified */}
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-indigo-100/80">
-                  <div className="flex items-center gap-2">
-                    <span className="flex h-3 w-3 relative">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                    </span>
-                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                      Sistem Aktif & Terintegrasi
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 text-[11px] font-extrabold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-200/80">
-                    <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-                    <span>SG Official</span>
-                  </div>
-                </div>
-
-                {/* Center Showcase: Aesthetic Large SG Logo */}
-                <div className="flex flex-col items-center text-center my-4">
-                  <div className="relative mb-5 transform transition-transform duration-300 group-hover:scale-105">
-                    <SiapGuruLogo size="2xl" variant="icon" showSparkle={true} />
-                  </div>
-                  <h3 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                    SIAP GURU
-                    <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200">
-                      SG
-                    </span>
-                  </h3>
-                  <p className="text-xs text-indigo-600 font-semibold mt-1">
-                    Smart Teacher Copilot &amp; Multi-Tenant EdAdmin
-                  </p>
-                </div>
-
-                {/* Micro Metrics & Features */}
-                <div className="space-y-2.5 mt-6 pt-5 border-t border-indigo-100/80">
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-slate-100 shadow-xs hover:border-indigo-200 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs">
-                        <Brain className="w-4 h-4" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xs font-bold text-slate-900">Generator AI Deep Learning</p>
-                        <p className="text-[10px] text-slate-500">CP, TP, ATP, Prota &amp; Modul Ajar</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Instan</span>
-                  </div>
-
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-slate-100 shadow-xs hover:border-indigo-200 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
-                        <Printer className="w-4 h-4" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xs font-bold text-slate-900">Format Cetak Resmi A4</p>
-                        <p className="text-[10px] text-slate-500">Kop Surat, Logo &amp; TTD Kepala Sekolah</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">1-Klik</span>
-                  </div>
-
-                  <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-slate-100 shadow-xs hover:border-indigo-200 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-xs">
-                        <ClipboardCheck className="w-4 h-4" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xs font-bold text-slate-900">Presensi &amp; Rekap Nilai Otomatis</p>
-                        <p className="text-[10px] text-slate-500">Kalkulasi Rapor &amp; Ledger Presisi</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-md">Otomatis</span>
-                  </div>
-                </div>
-
-                {/* Bottom Trust Tagline */}
-                <div className="mt-5 text-center bg-indigo-50/60 p-2.5 rounded-xl border border-indigo-100">
-                  <p className="text-[11px] font-medium text-indigo-900">
-                    ✨ <em>"Mengajar dengan tenang, administrasi selalu siap di genggaman."</em>
-                  </p>
-                </div>
-
-              </div>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <button 
+                onClick={() => setIsRegisterModalOpen(true)} 
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white font-bold rounded-xl shadow-xl shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.99] text-center cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>Daftar Sekarang</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
+              <a 
+                href="#fitur-ai" 
+                className="w-full sm:w-auto px-7 py-4 bg-white hover:bg-indigo-50/60 border border-indigo-200 text-slate-800 font-bold rounded-xl transition-all text-center flex items-center justify-center gap-2 shadow-xs cursor-pointer hover:border-indigo-300"
+              >
+                <Play className="w-4 h-4 text-indigo-600" fill="currentColor" /> 
+                <span>Eksplorasi Fitur AI</span>
+              </a>
             </div>
 
+            {/* Trust Badge */}
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 pt-2">
+              <span className="flex items-center gap-1 font-semibold text-slate-700">
+                <Check className="w-4 h-4 text-emerald-600" /> Tanpa Instalasi Software
+              </span>
+              <span className="text-slate-300">&bull;</span>
+              <span className="flex items-center gap-1 font-semibold text-slate-700">
+                <Check className="w-4 h-4 text-emerald-600" /> Akses Cloud Laptop & HP
+              </span>
+              <span className="text-slate-300">&bull;</span>
+              <span className="flex items-center gap-1 font-semibold text-slate-700">
+                <Check className="w-4 h-4 text-emerald-600" /> Dukungan Teknis 24/7
+              </span>
+            </div>
           </div>
         </div>
       </section>
