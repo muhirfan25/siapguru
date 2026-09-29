@@ -29,6 +29,7 @@ const TAB_TITLES: Record<string, string> = {
   lkpdai: "Generator LKPD AI (Lembar Kerja Peserta Didik)",
   ailainnya: "Generator AI Lainnya",
   laporan: "Pusat Cetak Laporan PDF",
+  panduan_aplikasi: "Buku Panduan Ringkas Penggunaan SIAP GURU (PDF)",
   pengaturan: "Pengaturan & Profil Sekolah",
   backup: "Pencadangan & Pemulihan Database (Backup & Restore)",
   resetdb: "Kosongkan & Hapus Seluruh Isi Database"

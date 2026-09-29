@@ -19,13 +19,16 @@ import {
   LayoutGrid,
   Library,
   FileSignature,
-  Briefcase
+  Briefcase,
+  Clock,
+  Shield
 } from "lucide-react";
-import { Siswa, Guru, Mapel, LogAbsensi, DataNilai, Jadwal } from "../types";
+import { Sekolah, Siswa, Guru, Mapel, LogAbsensi, DataNilai, Jadwal } from "../types";
 
 interface DashboardViewProps {
   userRole?: "superadmin" | "admin_sekolah" | "guru" | string | null;
   sekolahId?: string;
+  sekolahData?: Sekolah | null;
   userName?: string;
   siswaList: Siswa[];
   guruList?: Guru[];
@@ -38,6 +41,8 @@ interface DashboardViewProps {
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   userRole,
+  sekolahId,
+  sekolahData,
   userName,
   siswaList,
   guruList = [],
@@ -211,6 +216,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       color: "bg-teal-50 text-teal-600 dark:bg-teal-950/60 dark:text-teal-400 border-teal-200"
     },
     {
+      id: "panduan_aplikasi",
+      title: "Panduan Aplikasi (PDF)",
+      desc: "Petunjuk alur operasional, unduh buku panduan resmi A4, & panduan NIP/NIY.",
+      icon: BookOpen,
+      badge: "Petunjuk & PDF",
+      color: "bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 border-blue-200"
+    },
+    {
       id: "pengaturan",
       title: "Pengaturan & Profil",
       desc: "Kelola profil guru, NIP, instansi sekolah, & gambar tanda tangan.",
@@ -237,9 +250,141 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               {userName || (userRole === "admin_sekolah" || userRole === "superadmin" ? "Admin" : "Guru")}! 👋
             </p>
           </div>
-          <p className="text-slate-300 text-sm font-normal">
-            Anda login sebagai <span className="font-semibold bg-indigo-950/80 text-indigo-300 border border-indigo-800/70 px-2.5 py-0.5 rounded-lg ml-1 text-xs">{userRole === "admin_sekolah" || userRole === "superadmin" ? "Administrator" : "Guru"}</span>
-          </p>
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="text-slate-300 text-sm font-normal">
+              Anda login sebagai <span className="font-semibold bg-indigo-950/80 text-indigo-300 border border-indigo-800/70 px-2.5 py-0.5 rounded-lg ml-1 text-xs">{userRole === "admin_sekolah" ? "Administrator Sekolah" : userRole === "superadmin" ? "Superadmin" : "Guru"}</span>
+            </span>
+
+            {/* Subscription Status Badge */}
+            {userRole === "superadmin" ? (
+              <span className="font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800/70 px-2.5 py-0.5 rounded-lg text-xs inline-flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-emerald-400" /> Akses Master Superadmin
+              </span>
+            ) : sekolahData ? (
+              (() => {
+                if (sekolahData.subscriptionPlan === 'permanen') {
+                  return (
+                    <span className="font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800/70 px-2.5 py-0.5 rounded-lg text-xs inline-flex items-center gap-1.5 shadow-xs">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                      Masa Aktif: Permanen (Lifetime)
+                    </span>
+                  );
+                }
+
+                if (sekolahData.expiresAt) {
+                  const diffMs = sekolahData.expiresAt - Date.now();
+                  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+                  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+                  let timeString = '';
+                  let subDate = '';
+                  let isUrgent = false;
+
+                  if (diffMs <= 0) {
+                    timeString = '0 Hari (Kedaluwarsa)';
+                    subDate = 'Waktu habis';
+                    isUrgent = true;
+                  } else if (diffHours < 1) {
+                    timeString = `Sisa ${diffMinutes} Menit`;
+                    subDate = `s/d ${new Date(sekolahData.expiresAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })} WIB`;
+                    isUrgent = true;
+                  } else if (diffHours < 24) {
+                    const remMin = diffMinutes % 60;
+                    timeString = remMin > 0 ? `Sisa ${diffHours} Jam ${remMin} Menit` : `Sisa ${diffHours} Jam`;
+                    subDate = `s/d ${new Date(sekolahData.expiresAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })} WIB`;
+                    isUrgent = true;
+                  } else {
+                    timeString = `Sisa ${diffDays} Hari`;
+                    subDate = `s/d ${new Date(sekolahData.expiresAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+                    isUrgent = diffDays <= 7;
+                  }
+
+                  let planLabel = '30 Hari (Uji Coba)';
+                  if (sekolahData.subscriptionPlan === 'custom') {
+                    const u = sekolahData.customDurationUnit === 'jam' ? 'Jam' : sekolahData.customDurationUnit === 'bulan' ? 'Bulan' : 'Hari';
+                    planLabel = `Custom ${sekolahData.customDurationValue || 1} ${u}`;
+                  } else if (sekolahData.subscriptionPlan === '1_jam') {
+                    planLabel = 'Uji Coba 1 Jam';
+                  } else if (sekolahData.subscriptionPlan === '2_jam') {
+                    planLabel = 'Uji Coba 2 Jam';
+                  } else if (sekolahData.subscriptionPlan === '3_jam') {
+                    planLabel = 'Uji Coba 3 Jam';
+                  } else if (sekolahData.subscriptionPlan === '6_jam') {
+                    planLabel = 'Uji Coba 6 Jam';
+                  } else if (sekolahData.subscriptionPlan === '12_jam') {
+                    planLabel = 'Uji Coba 12 Jam';
+                  } else if (sekolahData.subscriptionPlan === '1_hari') {
+                    planLabel = 'Uji Coba 1 Hari (24 Jam)';
+                  } else if (sekolahData.subscriptionPlan === '2_hari') {
+                    planLabel = 'Uji Coba 2 Hari';
+                  } else if (sekolahData.subscriptionPlan === '3_hari') {
+                    planLabel = 'Uji Coba 3 Hari (72 Jam)';
+                  } else if (sekolahData.subscriptionPlan === '7_hari') {
+                    planLabel = 'Uji Coba 7 Hari';
+                  } else if (sekolahData.subscriptionPlan === '14_hari') {
+                    planLabel = 'Uji Coba 14 Hari';
+                  } else if (sekolahData.subscriptionPlan === '6_bulan') {
+                    planLabel = '6 Bulan (1 Semester)';
+                  } else if (sekolahData.subscriptionPlan === '1_tahun') {
+                    planLabel = '1 Tahun (1 Tahun Ajaran)';
+                  }
+
+                  return (
+                    <span className={`font-semibold px-2.5 py-0.5 rounded-lg text-xs inline-flex items-center gap-1.5 border shadow-xs ${
+                      isUrgent 
+                        ? 'bg-amber-950/80 text-amber-300 border-amber-800/70 animate-pulse' 
+                        : 'bg-blue-950/80 text-blue-300 border-blue-800/70'
+                    }`}>
+                      <Clock className="w-3.5 h-3.5" />
+                      Masa Aktif: {timeString} • {planLabel} ({subDate})
+                    </span>
+                  );
+                }
+
+                return (
+                  <span className="font-semibold bg-blue-950/80 text-blue-300 border border-blue-800/70 px-2.5 py-0.5 rounded-lg text-xs inline-flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" />
+                    Masa Aktif: 30 Hari (Uji Coba)
+                  </span>
+                );
+              })()
+            ) : null}
+          </div>
+
+          {/* Urgent Warning if <= 7 days or <= 24 hours left */}
+          {sekolahData && sekolahData.subscriptionPlan !== 'permanen' && sekolahData.expiresAt && (
+            (() => {
+              const diffMs = sekolahData.expiresAt - Date.now();
+              if (diffMs > 0 && diffMs <= 7 * 24 * 60 * 60 * 1000) {
+                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+                const remainingLabel = diffHours < 24 
+                  ? (diffHours < 1 ? `${Math.floor(diffMs / (1000 * 60))} menit` : `${diffHours} jam`) 
+                  : `${diffDays} hari`;
+                return (
+                  <div className="mt-3 p-3 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-amber-300 shrink-0" />
+                      <span>
+                        Pemberitahuan: Masa aktif uji coba sekolah Anda tersisa <strong>{remainingLabel} lagi</strong>. Hubungi Superadmin untuk aktivasi / perpanjangan paket.
+                      </span>
+                    </div>
+                    <a 
+                      href="https://wa.me/6285255700081?text=Halo%20Admin%20SIAP%20GURU,%20saya%20ingin%20perpanjang%20masa%20aktif%20sekolah%20kami."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1 rounded-lg bg-amber-400 text-slate-900 font-bold hover:bg-amber-300 transition-colors shrink-0"
+                    >
+                      Perpanjang via WA
+                    </a>
+                  </div>
+                );
+              }
+              return null;
+            })()
+          )}
+
           <p className="text-indigo-200/90 text-xs sm:text-sm mt-3 max-w-2xl leading-relaxed">
             Menegaskan guru selalu dalam kondisi <strong>siap</strong>: siap mengajar di kelas, siap menghadapi supervisi Kepala Sekolah/Pengawas, dan berkas administrasi selalu siap cetak kapan saja tanpa lembur mendadak.
           </p>
@@ -265,6 +410,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           >
             <Wand2 className="w-4 h-4 text-white" />
             <span>Buat Modul AI</span>
+          </button>
+
+          <button 
+            onClick={() => onNavigate("panduan_aplikasi")}
+            className="bg-blue-600/25 hover:bg-blue-600/40 text-blue-200 hover:text-white px-5 py-2.5 rounded-xl text-xs font-semibold backdrop-blur-md transition-all flex items-center space-x-2 shrink-0 cursor-pointer border border-blue-400/30"
+          >
+            <BookOpen className="w-4 h-4 text-blue-300" />
+            <span>Panduan Ringkas (PDF)</span>
           </button>
         </div>
       </div>

@@ -3,7 +3,7 @@ import {
   Users, UserCheck, ShieldAlert, BookOpen, Clock, CalendarCheck, 
   Award, BookMarked, UsersRound, Settings, FileSpreadsheet, Key, LogOut,
   ChevronLeft, LayoutDashboard, BrainCircuit, Library, Briefcase, FileSignature, Sparkles, Plus, Lock, Building2, Trash2,
-  HardDriveDownload
+  HardDriveDownload, FileText
 } from 'lucide-react';
 import { SiapGuruLogo } from './SiapGuruLogo';
 
@@ -55,6 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       { id: 'bimbingan_wali', label: 'Bimbingan Wali', icon: ShieldAlert },
 
       { isHeader: true, label: 'SISTEM & OUTPUT' },
+      { id: 'panduan_aplikasi', label: 'Panduan Aplikasi', icon: FileText, highlight: true },
       { id: 'laporan', label: 'Pusat Laporan', icon: FileSpreadsheet },
       { id: 'pengaturan', label: 'Pengaturan & Profil', icon: Settings },
       { id: 'backup', label: 'Pencadangan Data', icon: HardDriveDownload },
@@ -80,6 +81,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       { id: 'bimbingan_wali', label: 'Bimbingan Wali', icon: ShieldAlert },
 
       { isHeader: true, label: 'SISTEM & OUTPUT' },
+      { id: 'panduan_aplikasi', label: 'Panduan Aplikasi', icon: FileText, highlight: true },
       { id: 'laporan', label: 'Pusat Laporan', icon: FileSpreadsheet },
     ];
   }

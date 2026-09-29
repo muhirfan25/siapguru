@@ -96,16 +96,74 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onBack }) 
             const cleanUid = userCredential.user.uid.replace(/[^a-zA-Z0-9]/g, '').slice(0, 10);
             resolvedSekolahId = `sekolah_${cleanUid || Date.now().toString()}`;
             const schoolName = `Sekolah ${email.split('@')[0].toUpperCase()}`;
+            const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
             
             await setDoc(doc(firestore, COLLECTIONS.SEKOLAH, resolvedSekolahId), {
               nama: schoolName,
               emailAdmin: email,
               status: 'active',
+              subscriptionPlan: '30_hari',
+              activatedAt: Date.now(),
+              expiresAt: Date.now() + thirtyDaysMs,
               createdAt: Date.now()
             });
           } catch (err) {
             console.error("Failed to auto-create sekolah record:", err);
             resolvedSekolahId = `sekolah_${userCredential.user.uid.slice(0, 10)}`;
+          }
+        }
+
+        // Check if school is blocked or subscription expired
+        if (resolvedSekolahId) {
+          const sDoc = await getDoc(doc(firestore, COLLECTIONS.SEKOLAH, resolvedSekolahId));
+          if (sDoc.exists()) {
+            const sData = sDoc.data();
+            if (sData.status === 'blocked') {
+              Swal.fire({
+                icon: 'error',
+                title: 'Akun Dinonaktifkan',
+                text: 'Akses akun sekolah Anda saat ini dinonaktifkan oleh Superadmin. Silakan hubungi Superadmin.',
+                confirmButtonColor: '#ef4444'
+              });
+              setLoading(false);
+              return;
+            }
+            if (sData.subscriptionPlan !== 'permanen' && sData.expiresAt && sData.expiresAt < Date.now()) {
+              const expiredDate = new Date(sData.expiresAt).toLocaleString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              }) + ' WIB';
+              Swal.fire({
+                icon: 'warning',
+                title: 'Masa Aktif Kedaluwarsa',
+                html: `
+                  <div class="text-left text-sm space-y-2">
+                    <p>Masa aktif akun sekolah Anda telah berakhir pada <b>${expiredDate}</b>.</p>
+                    <p>Kategori masa aktif yang dapat diaktifkan:</p>
+                    <ul class="list-disc pl-5 text-xs text-gray-600 space-y-1">
+                      <li>⚡ Uji Coba Cepat (1 Jam / 1 Hari / 3 Hari / 30 Hari)</li>
+                      <li>📆 Masa Aktif 6 Bulan (1 Semester)</li>
+                      <li>🗓️ Masa Aktif 1 Tahun (1 Tahun Ajaran)</li>
+                      <li>💎 Aktif Permanen (Lifetime / Selamanya)</li>
+                    </ul>
+                    <p class="pt-2 text-xs text-blue-600 font-semibold">Silakan hubungi Superadmin untuk aktivasi atau perpanjangan.</p>
+                  </div>
+                `,
+                confirmButtonColor: '#2563eb',
+                confirmButtonText: 'Hubungi WhatsApp',
+                showCancelButton: true,
+                cancelButtonText: 'Tutup'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.open('https://wa.me/6285255700081?text=Halo%20Admin%20SIAP%20GURU,%20masa%20aktif%20sekolah%20kami%20telah%20berakhir.%20Mohon%20info%20perpanjangan.', '_blank');
+                }
+              });
+              setLoading(false);
+              return;
+            }
           }
         }
 
@@ -160,12 +218,58 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onBack }) 
                 targetSekolahId = sekSnap.docs[0].id;
               }
             }
+
+            // Check if school is blocked or subscription expired
+            if (targetSekolahId) {
+              const sDoc = await getDoc(doc(firestore, COLLECTIONS.SEKOLAH, targetSekolahId));
+              if (sDoc.exists()) {
+                const sData = sDoc.data();
+                if (sData.status === 'blocked') {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Akses Guru Dinonaktifkan',
+                    text: 'Akses akun sekolah Anda saat ini dinonaktifkan oleh Superadmin. Silakan hubungi pihak Admin Sekolah.',
+                    confirmButtonColor: '#ef4444'
+                  });
+                  return;
+                }
+                if (sData.subscriptionPlan !== 'permanen' && sData.expiresAt && sData.expiresAt < Date.now()) {
+                  const expiredDate = new Date(sData.expiresAt).toLocaleString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }) + ' WIB';
+                  Swal.fire({
+                    icon: 'warning',
+                    title: 'Masa Aktif Sekolah Kedaluwarsa',
+                    html: `
+                      <div class="text-left text-sm space-y-2">
+                        <p>Masa aktif lisensi sekolah Anda telah berakhir pada <b>${expiredDate}</b>.</p>
+                        <p class="text-xs text-gray-500">Silakan hubungi Admin Sekolah Anda atau Superadmin untuk melakukan aktivasi perpanjangan masa aktif (Uji Coba, 6 Bulan, 1 Tahun, atau Permanen).</p>
+                      </div>
+                    `,
+                    confirmButtonColor: '#2563eb',
+                    confirmButtonText: 'Hubungi WhatsApp',
+                    showCancelButton: true,
+                    cancelButtonText: 'Tutup'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.open('https://wa.me/6285255700081?text=Halo%20Admin%20SIAP%20GURU,%20masa%20aktif%20sekolah%20kami%20telah%20berakhir.%20Mohon%20info%20perpanjangan.', '_blank');
+                    }
+                  });
+                  return;
+                }
+              }
+            }
+
             onLoginSuccess('guru', guruData.nama, targetSekolahId);
           } else {
             Swal.fire({
               icon: 'error',
               title: 'Login Guru Gagal',
-              text: 'Password yang dimasukkan salah! (Default: 123456 atau NIP)',
+              text: 'Password yang dimasukkan salah! (Default: 123456 atau NIP/NIY)',
               confirmButtonColor: '#3b82f6',
               timer: 3000
             });
@@ -174,7 +278,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onBack }) 
           Swal.fire({
             icon: 'error',
             title: 'Login Guru Gagal',
-            text: 'NIP Guru tidak ditemukan atau belum didaftarkan oleh Admin Sekolah!',
+            text: 'NIP / NIY Guru tidak ditemukan atau belum didaftarkan oleh Admin Sekolah!',
             confirmButtonColor: '#3b82f6',
             timer: 3000
           });
@@ -232,7 +336,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onBack }) 
         <form onSubmit={handleLogin} className="p-8 space-y-6">
           <div>
             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">
-              {role === 'guru' ? 'NIP Guru' : 'Email Admin'}
+              {role === 'guru' ? 'NIP / NIY Guru' : 'Email Admin'}
             </label>
             <input 
               type={role === 'guru' ? 'text' : 'email'} 
@@ -240,8 +344,13 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onBack }) 
               value={identifier}
               onChange={e => setIdentifier(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 dark:bg-slate-900 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition-all"
-              placeholder={role === 'guru' ? 'Masukkan NIP' : 'admin@sekolah.com'}
+              placeholder={role === 'guru' ? 'Masukkan NIP atau NIY' : 'admin@sekolah.com'}
             />
+            {role === 'guru' && (
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 flex items-center gap-1">
+                <span>ℹ️ Berlaku NIP (Sekolah Negeri) atau NIY (Nomor Induk Yayasan untuk Sekolah Swasta)</span>
+              </p>
+            )}
           </div>
           
           <div>

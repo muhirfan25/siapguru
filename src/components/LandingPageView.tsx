@@ -27,12 +27,15 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { SiapGuruLogo } from './SiapGuruLogo';
+import { KategoriMasaAktifView } from './KategoriMasaAktifView';
 
 interface LandingPageViewProps {
   onLoginClick: () => void;
+  onNavigateToPaket?: () => void;
 }
 
-export const LandingPageView: React.FC<LandingPageViewProps> = ({ onLoginClick }) => {
+export const LandingPageView: React.FC<LandingPageViewProps> = ({ onLoginClick, onNavigateToPaket }) => {
+  const [showPaketPage, setShowPaketPage] = React.useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = React.useState(false);
   const [regData, setRegData] = React.useState({
     nama: "",
@@ -40,31 +43,49 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ onLoginClick }
     email: "",
     asalSekolah: "",
     jenisKelamin: "Laki-laki",
-    paket: "Personal (Rp 99.000)"
+    paket: "Masa Aktif 1 Tahun - Rp 100.000"
   });
+
+  const handleGoToPaket = () => {
+    if (onNavigateToPaket) {
+      onNavigateToPaket();
+    } else {
+      setShowPaketPage(true);
+    }
+  };
+
+  if (showPaketPage) {
+    return (
+      <KategoriMasaAktifView
+        onBackToLanding={() => setShowPaketPage(false)}
+        onLoginClick={onLoginClick}
+      />
+    );
+  }
 
   const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Halo Admin, saya ingin mendaftar aplikasi SIAP GURU.
+    const message = `Halo Admin SIAP GURU, saya ingin mendaftar aplikasi SIAP GURU.
 
 Berikut data pendaftaran saya:
-- Nama: ${regData.nama}\n- Asal Sekolah: ${regData.asalSekolah}
+- Nama: ${regData.nama}
+- Asal Sekolah: ${regData.asalSekolah}
 - No HP/WA: ${regData.noHp}
 - Email: ${regData.email}
 - Jenis Kelamin: ${regData.jenisKelamin}
-- Pilihan Paket: ${regData.paket}
+- Pilihan Masa Aktif: ${regData.paket}
 
-Untuk transfer pendaftaran dapat dilakukan ke:
-BRI 022301014562531 AN. MUH IRFAN
+Untuk transfer aktivasi dapat dilakukan ke:
+BRI: 022301014562531 AN. MUH IRFAN
 DANA: 085255700081
 
-Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda bukti, terima kasih semoga kakak dapat manfaat yang banyak dari aplikasi ini.`;
+Mohon untuk konfirmasi dan aktivasi akun saya. Terima kasih!`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/6285255700081?text=${encodedMessage}`, "_blank");
     setIsRegisterModalOpen(false);
   };
   return (
-    <div className="bg-slate-50 text-slate-800 antialiased font-sans selection:bg-indigo-100 selection:text-indigo-900 scroll-smooth">
+    <div className="bg-slate-50 text-slate-800 antialiased font-poppins selection:bg-indigo-100 selection:text-indigo-900 scroll-smooth">
       {/* NAVBAR */}
       <nav className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -82,7 +103,8 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
             </a>
             <a href="#utama" className="hover:text-blue-600 transition-colors">Manajemen</a>
             <a href="#akademik" className="hover:text-blue-600 transition-colors">Akademik</a>
-            <a href="#output" className="hover:text-blue-600 transition-colors">Sistem & Output</a>
+            <button onClick={handleGoToPaket} className="hover:text-blue-600 transition-colors font-medium cursor-pointer">Masa Aktif &amp; Paket</button>
+            <a href="#output" className="hover:text-blue-600 transition-colors">Sistem &amp; Output</a>
           </div>
 
           <div className="flex items-center gap-3">
@@ -90,7 +112,7 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
               <SiapGuruLogo size="xs" variant="icon" showSparkle={false} />
               <span className="text-xs font-extrabold tracking-tight">SG</span>
             </div>
-            <button onClick={() => setIsRegisterModalOpen(true)} className="hidden sm:block px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold rounded-xl transition-all cursor-pointer">Daftar</button>
+            <button onClick={handleGoToPaket} className="hidden sm:block px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold rounded-xl transition-all cursor-pointer">Beli Paket</button>
             <button onClick={onLoginClick} className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02] cursor-pointer">Masuk</button>
           </div>
         </div>
@@ -121,7 +143,7 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
                 <span className="px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-xs font-bold tracking-wide uppercase">SIAP GURU</span>
                 <span className="text-base sm:text-lg font-bold text-slate-800">Sistem Informasi Administrasi &amp; Perangkat Guru</span>
               </div>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto text-justify">
                 Solusi <em>all-in-one</em> terpadu agar guru selalu <strong>siap mengajar di kelas</strong>, <strong>siap menghadapi supervisi</strong>, dan berkas administrasi <strong>selalu siap cetak</strong> kapan saja tanpa lembur mendadak. Rancang Modul Ajar Deep Learning, CP-TP-ATP, presensi, hingga cetak laporan resmi ber-KOP A4 hanya dalam hitungan detik.
               </p>
             </div>
@@ -149,10 +171,10 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <button 
-                onClick={() => setIsRegisterModalOpen(true)} 
+                onClick={handleGoToPaket} 
                 className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white font-bold rounded-xl shadow-xl shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.99] text-center cursor-pointer flex items-center justify-center gap-2"
               >
-                <span>Daftar Sekarang</span>
+                <span>Beli Paket Sekarang</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
               <a 
@@ -411,7 +433,7 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-3">Pusat Laporan Resmi</h3>
                 <p className="text-slate-600 leading-relaxed mb-6">
-                  Cetak seluruh dokumen administrasi guru dalam format standar pemerintah. Dilengkapi dengan tata letak <strong>Kop Surat Sekolah</strong>, tabel yang rapi, dan kolom Tanda Tangan digital/manual.
+                  Cetak seluruh dokumen administrasi guru dalam format standar pemerintah. Dilengkapi dengan tata letak <strong>Kop Surat Sekolah</strong> serta tabel yang rapi dan presisi.
                 </p>
               </div>
               <ul className="space-y-2 text-sm text-slate-700 border-t border-slate-100 pt-4">
@@ -428,12 +450,12 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-3">Pengaturan Profil & Kop Sekolah</h3>
                 <p className="text-slate-600 leading-relaxed mb-6">
-                  Isi data profil dan identitas sekolah Anda satu kali. Sistem secara otomatis menerapkan identitas tersebut ke seluruh Kop Surat Laporan PDF dan Nama Penandatangan.
+                  Isi data profil dan identitas sekolah Anda satu kali. Sistem secara otomatis menerapkan identitas tersebut ke seluruh Kop Surat Laporan PDF.
                 </p>
               </div>
               <ul className="space-y-2 text-sm text-slate-700 border-t border-slate-100 pt-4">
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500" /> Integrasi Otomatis ke Semua Dokumen</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500" /> Mendukung Logo Sekolah & TTD Digital</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500" /> Mendukung Logo Resmi Sekolah</li>
               </ul>
             </div>
           </div>
@@ -590,92 +612,9 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
             Hemat puluhan jam setiap bulannya. Bergabunglah dengan ribuan guru lainnya yang sudah beralih ke administrasi digital berbasis AI.
           </p>
           <div className="pt-2">
-            <button onClick={() => setIsRegisterModalOpen(true)} className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02] cursor-pointer">
-              Mulai Sekarang Gratis
+            <button onClick={handleGoToPaket} className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02] cursor-pointer">
+              Beli Paket Sekarang
             </button>
-          </div>
-        </div>
-      </section>
-
-
-      {/* HARGA SECTION */}
-      <section id="harga" className="py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="px-3.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold tracking-wide uppercase inline-flex items-center gap-1.5 mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-blue-600" /> Investasi Cerdas Guru &amp; Sekolah
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">Pilihan Paket Berlangganan Terjangkau</h2>
-            <p className="text-slate-600 mt-3 text-base">Hemat jutaan rupiah dibanding membeli software terpisah. Pilih paket yang pas untuk kebutuhan Anda.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Paket Personal */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:border-indigo-300 hover:shadow-xl transition-all flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase">Guru Mandiri</span>
-                  <span className="text-xs text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">Akses Langsung</span>
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-2">Paket Personal</h3>
-                <p className="text-slate-500 text-sm mb-6">Cocok untuk penggunaan mandiri oleh satu orang guru yang ingin bebas dari lembur administrasi.</p>
-                <div className="mb-6 pb-6 border-b border-slate-100">
-                  <span className="text-4xl font-black text-slate-900">Rp 99.000</span>
-                  <span className="text-slate-500 text-sm ml-2 font-medium">/ akun aktif</span>
-                </div>
-                <ul className="space-y-3.5 mb-8">
-                  <li className="flex items-center gap-3 text-slate-700 text-sm font-medium">
-                    <Check className="w-5 h-5 text-indigo-600 shrink-0" /> Generator AI Modul Ajar &amp; Perangkat Ajar Lengkap
-                  </li>
-                  <li className="flex items-center gap-3 text-slate-700 text-sm font-medium">
-                    <Check className="w-5 h-5 text-indigo-600 shrink-0" /> Cetak Dokumen PDF Resmi A4 Ber-KOP &amp; TTD
-                  </li>
-                  <li className="flex items-center gap-3 text-slate-700 text-sm font-medium">
-                    <Check className="w-5 h-5 text-indigo-600 shrink-0" /> Input Presensi &amp; Rekap Nilai Formatif-Sumatif
-                  </li>
-                  <li className="flex items-center gap-3 text-slate-700 text-sm font-medium">
-                    <Check className="w-5 h-5 text-indigo-600 shrink-0" /> Penyimpanan Cloud Aman &amp; Dukungan WhatsApp
-                  </li>
-                </ul>
-              </div>
-              <button onClick={() => { setRegData({...regData, paket: "Personal (Rp 99.000)"}); setIsRegisterModalOpen(true); }} className="w-full py-3.5 px-4 bg-slate-100 hover:bg-indigo-50 text-slate-900 hover:text-indigo-700 font-bold rounded-xl text-center transition-all cursor-pointer shadow-xs">
-                Daftar Paket Personal
-              </button>
-            </div>
-
-            {/* Paket Sekolah */}
-            <div className="bg-gradient-to-b from-[#0A1128] via-[#0E1A3C] to-[#101F42] p-8 rounded-3xl border border-indigo-700/80 shadow-2xl flex flex-col justify-between relative overflow-hidden text-white">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-black rounded-full shadow-xs uppercase tracking-wide">Paling Populer &amp; Hemat</span>
-                  <span className="text-xs text-indigo-300 font-bold bg-indigo-900/60 px-2.5 py-0.5 rounded-full border border-indigo-700">Multi-User</span>
-                </div>
-                <h3 className="text-2xl font-black text-white mb-2">Institusi Sekolah</h3>
-                <p className="text-indigo-200/80 text-sm mb-6">Lisensi terpadu untuk sekolah: seluruh guru memiliki akun mandiri dan Kepala Sekolah dapat memantau supervisi.</p>
-                <div className="mb-6 pb-6 border-b border-indigo-900/80">
-                  <span className="text-4xl font-black text-white">Rp 199.000</span>
-                  <span className="text-indigo-200/70 text-sm ml-2 font-medium">/ lembaga sekolah</span>
-                </div>
-                <ul className="space-y-3.5 mb-8">
-                  <li className="flex items-center gap-3 text-slate-200 text-sm font-medium">
-                    <Check className="w-5 h-5 text-emerald-400 shrink-0" /> Mencakup Semua Fitur Lengkap Paket Personal
-                  </li>
-                  <li className="flex items-center gap-3 text-slate-200 text-sm font-medium">
-                    <Check className="w-5 h-5 text-emerald-400 shrink-0" /> Akses Multi-Guru (Seluruh Pengajar di Sekolah)
-                  </li>
-                  <li className="flex items-center gap-3 text-slate-200 text-sm font-medium">
-                    <Check className="w-5 h-5 text-emerald-400 shrink-0" /> Dashboard Khusus Supervisi Kepala Sekolah
-                  </li>
-                  <li className="flex items-center gap-3 text-slate-200 text-sm font-medium">
-                    <Check className="w-5 h-5 text-emerald-400 shrink-0" /> Fitur Pencadangan &amp; Pemulihan Data Sekolah Cloud
-                  </li>
-                </ul>
-              </div>
-              <button onClick={() => { setRegData({...regData, paket: "Sekolah (Rp 199.000)"}); setIsRegisterModalOpen(true); }} className="w-full py-3.5 px-4 bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-400 hover:to-blue-500 text-white font-bold rounded-xl text-center transition-all shadow-lg shadow-indigo-600/40 cursor-pointer">
-                Daftar Paket Sekolah
-              </button>
-            </div>
           </div>
         </div>
       </section>
@@ -741,10 +680,13 @@ Apabila sudah transfer silahkan konfirmasi ya kak, jangan lupa lampirkan tanda b
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1">Pilihan Paket</label>
-                  <select required value={regData.paket} onChange={(e) => setRegData({...regData, paket: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition-all text-sm">
-                    <option value="Personal (Rp 99.000)">Personal / Mandiri - Rp 99.000</option>
-                    <option value="Sekolah (Rp 199.000)">Institusi Sekolah - Rp 199.000</option>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Pilihan Paket Masa Aktif</label>
+                  <select required value={regData.paket} onChange={(e) => setRegData({...regData, paket: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition-all text-sm cursor-pointer">
+                    <option value="Masa Aktif 30 Hari - Rp 29.999">Masa Aktif 30 Hari — Rp 29.999</option>
+                    <option value="Masa Aktif 6 Bulan - Rp 49.999">Masa Aktif 6 Bulan (1 Semester) — Rp 49.999</option>
+                    <option value="Masa Aktif 1 Tahun - Rp 100.000">Masa Aktif 1 Tahun (1 Tahun Ajaran) — Rp 100.000</option>
+                    <option value="Aktif Lifetime (Permanen) - Rp 149.999">Aktif Lifetime (Permanen / Sekali Bayar) — Rp 149.999</option>
+                    <option value="Uji Coba 1 Jam (Demo Singkat)">Uji Coba 1 Jam (Demo Singkat Evaluasi)</option>
                   </select>
                 </div>
                 <div className="pt-4">

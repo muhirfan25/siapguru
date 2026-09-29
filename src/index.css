@@ -1,6 +1,19 @@
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-poppins: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-roboto: 'Roboto', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.font-poppins {
+  font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.font-roboto {
+  font-family: 'Roboto', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 @layer utilities {
   /* Prevent blue tap highlight overlay on mobile devices */
   * {
@@ -36,5 +49,30 @@
   }
   .pt-safe {
     padding-top: env(safe-area-inset-top, 0px);
+  }
+}
+
+/* Global Print Styles for Clean A4 Output */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm 15mm 15mm;
+  }
+  
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt;
+  }
+
+  /* When printing, hide all app navigation and interactive elements */
+  aside, nav, header, footer, button, input, select, textarea,
+  .print\\:hidden, [role="navigation"] {
+    display: none !important;
+  }
+
+  /* Make sure printable content fills the page */
+  .print\\:block {
+    display: block !important;
   }
 }

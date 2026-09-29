@@ -57,7 +57,7 @@ export const KontrolSandiView: React.FC<KontrolSandiViewProps> = ({ guruList }) 
             <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Cari NIP atau Nama Guru..."
+              placeholder="Cari NIP / NIY atau Nama Guru..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -69,7 +69,7 @@ export const KontrolSandiView: React.FC<KontrolSandiViewProps> = ({ guruList }) 
           <table className="w-full text-left border-collapse">
             <thead className="bg-slate-50 dark:bg-slate-900/50 sticky top-0 z-10">
               <tr>
-                <th className="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">NIP</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">NIP / NIY</th>
                 <th className="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Nama Lengkap</th>
                 <th className="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Password Akses</th>
                 <th className="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase text-right w-24">Aksi</th>

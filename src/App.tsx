@@ -18,15 +18,18 @@ import { GeneratorPerangkatAjarAIView } from "./components/GeneratorPerangkatAja
 import { ModulAjarAIView } from "./components/ModulAjarAIView";
 import { AsistenGuruAIView } from "./components/AsistenGuruAIView";
 import { PusatLaporanView } from "./components/PusatLaporanView";
+import { PanduanAplikasiView } from "./components/PanduanAplikasiView";
 import { PengaturanView } from "./components/PengaturanView";
 import { ResetDatabaseView } from "./components/ResetDatabaseView";
 import { BackupDatabaseView } from "./components/BackupDatabaseView";
 import { LandingPageView } from "./components/LandingPageView";
+import { KategoriMasaAktifView } from "./components/KategoriMasaAktifView";
 import { LoginView } from "./components/LoginView";
 import { DashboardSuperadminView } from "./components/DashboardSuperadminView";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "./lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import { auth, firestore } from "./lib/firebase";
 import { 
   subscribeCollection, 
   subscribePengaturan, 
@@ -37,6 +40,7 @@ import {
 } from "./lib/firebase";
 
 import { 
+  Sekolah,
   Siswa, 
   Guru,
   Mapel, 
@@ -73,8 +77,8 @@ export default function App() {
   const [isConnected, setIsConnected] = useState(false);
 
   // Authentication State
-  const [appState, setAppState] = useState<'landing' | 'login' | 'dashboard'>(() => {
-    return (localStorage.getItem("edadmin_auth_state") as 'landing' | 'login' | 'dashboard') || "landing";
+  const [appState, setAppState] = useState<'landing' | 'login' | 'dashboard' | 'paket'>(() => {
+    return (localStorage.getItem("edadmin_auth_state") as 'landing' | 'login' | 'dashboard' | 'paket') || "landing";
   });
   
   const [userRole, setUserRole] = useState<'superadmin' | 'admin_sekolah' | 'guru' | null>(() => {
@@ -163,6 +167,7 @@ export default function App() {
   const [catatanList, setCatatanList] = useState<CatatanGuru[]>([]);
   const [arsipList, setArsipList] = useState<ArsipPerangkat[]>([]);
   const [config, setConfig] = useState<Pengaturan>(DEFAULT_CONFIG);
+  const [sekolahData, setSekolahData] = useState<Sekolah | null>(null);
 
   // Subscribe to Firebase real-time collections
   useEffect(() => {
@@ -180,9 +185,21 @@ export default function App() {
     setBimbinganList([]);
     setCatatanList([]);
     setArsipList([]);
+    setSekolahData(null);
 
     if (userRole) {
       const targetSekolahId = userRole === 'superadmin' ? undefined : (sekolahId || undefined);
+
+      if (sekolahId && userRole !== 'superadmin') {
+        unsubs.push(onSnapshot(doc(firestore, COLLECTIONS.SEKOLAH, sekolahId), (snap) => {
+          if (snap.exists()) {
+            setSekolahData({ id: snap.id, ...snap.data() } as Sekolah);
+          } else {
+            setSekolahData(null);
+          }
+        }));
+      }
+
       unsubs.push(subscribeCollection<any>(COLLECTIONS.GURU, (data) => {
         setGuruList(data);
         setIsConnected(true);
@@ -255,8 +272,22 @@ export default function App() {
   };
 
   // Render Based on App State
+  if (appState === 'paket') {
+    return (
+      <KategoriMasaAktifView
+        onBackToLanding={() => setAppState('landing')}
+        onLoginClick={() => setAppState('login')}
+      />
+    );
+  }
+
   if (appState === 'landing') {
-    return <LandingPageView onLoginClick={() => setAppState('login')} />;
+    return (
+      <LandingPageView 
+        onLoginClick={() => setAppState('login')} 
+        onNavigateToPaket={() => setAppState('paket')}
+      />
+    );
   }
 
   if (appState === 'login') {
@@ -275,7 +306,7 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen flex bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans transition-colors ${isDarkMode ? "dark" : ""}`}>
+    <div className={`min-h-screen flex bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-roboto transition-colors ${isDarkMode ? "dark" : ""}`}>
       {/* Navigation Sidebar */}
       <Sidebar
         activeTab={activeTab}
@@ -304,6 +335,7 @@ export default function App() {
             <DashboardView
               userRole={userRole}
               sekolahId={sekolahId}
+              sekolahData={sekolahData}
               userName={userName}
               siswaList={siswaList}
               guruList={guruList}
@@ -424,6 +456,13 @@ export default function App() {
               catatanList={catatanList}
               arsipList={arsipList}
               config={config}
+            />
+          )}
+
+          {activeTab === "panduan_aplikasi" && (
+            <PanduanAplikasiView
+              config={config}
+              userRole={userRole}
             />
           )}
 

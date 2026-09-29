@@ -1,9 +1,32 @@
+export type SubscriptionPlan = 
+  | '1_jam'
+  | '2_jam'
+  | '3_jam'
+  | '6_jam'
+  | '12_jam'
+  | '1_hari'
+  | '2_hari'
+  | '3_hari'
+  | '7_hari'
+  | '14_hari'
+  | '30_hari'
+  | '6_bulan'
+  | '1_tahun'
+  | 'permanen'
+  | 'custom';
+
 export interface Sekolah {
   id: string; // Document ID
   nama: string;
   alamat?: string;
   kepalaSekolah?: string;
-  status: 'active' | 'blocked';
+  status: 'active' | 'blocked' | 'expired';
+  subscriptionPlan?: SubscriptionPlan;
+  customDurationValue?: number;
+  customDurationUnit?: 'jam' | 'hari' | 'bulan';
+  expiresAt?: number | null; // Timestamp in ms. null or undefined for permanen
+  activatedAt?: number;
+  emailAdmin?: string;
   createdAt?: number;
   updatedAt?: number;
 }
@@ -16,6 +39,8 @@ export interface UserAccount {
   role: UserRole;
   sekolahId?: string; // Optional for superadmin
   nama?: string;
+  subscriptionPlan?: SubscriptionPlan;
+  expiresAt?: number | null;
   updatedAt?: number;
 }
 
