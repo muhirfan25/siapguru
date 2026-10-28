@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { SiapGuruLogo } from './SiapGuruLogo';
 import { KategoriMasaAktifView } from './KategoriMasaAktifView';
+import { PWAInstallBanner } from './PWAInstallBanner';
 
 interface LandingPageViewProps {
   onLoginClick: () => void;
@@ -108,9 +109,9 @@ Mohon untuk konfirmasi dan aktivasi akun saya. Terima kasih!`;
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-indigo-200/80 text-indigo-900 shadow-xs">
-              <SiapGuruLogo size="xs" variant="icon" showSparkle={false} />
-              <span className="text-xs font-extrabold tracking-tight">SG</span>
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50 to-white border border-indigo-200/80 text-indigo-900 shadow-xs">
+              <img src="/pwa-192x192.png" alt="Logo SIAP GURU" className="w-5 h-5 rounded-md object-cover shadow-2xs bg-white" />
+              <span className="text-xs font-black tracking-tight text-blue-800">SIAP GURU</span>
             </div>
             <button onClick={handleGoToPaket} className="hidden sm:block px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold rounded-xl transition-all cursor-pointer">Beli Paket</button>
             <button onClick={onLoginClick} className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02] cursor-pointer">Masuk</button>
@@ -646,6 +647,10 @@ Mohon untuk konfirmasi dan aktivasi akun saya. Terima kasih!`;
         </svg>
         <span className="absolute right-16 bg-[#0A1128] text-slate-100 text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-indigo-950/80 pointer-events-none">Hubungi via WhatsApp</span>
       </a>
+
+      {/* PWA Install Banner */}
+      <PWAInstallBanner />
+
       {/* REGISTER MODAL */}
       {isRegisterModalOpen && (
         <div className="fixed inset-0 z-[60] bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">

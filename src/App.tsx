@@ -26,6 +26,7 @@ import { LandingPageView } from "./components/LandingPageView";
 import { KategoriMasaAktifView } from "./components/KategoriMasaAktifView";
 import { LoginView } from "./components/LoginView";
 import { DashboardSuperadminView } from "./components/DashboardSuperadminView";
+import { PWAInstallBanner } from "./components/PWAInstallBanner";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -562,6 +563,9 @@ export default function App() {
           </button>
         </nav>
       </div>
+
+      {/* PWA In-App Install Banner for Mobile/Desktop */}
+      <PWAInstallBanner />
     </div>
   );
 }

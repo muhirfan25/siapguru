@@ -6,6 +6,7 @@ import {
   HardDriveDownload, FileText
 } from 'lucide-react';
 import { SiapGuruLogo } from './SiapGuruLogo';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface SidebarProps {
   activeTab: string;
@@ -139,7 +140,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )
           ))}
         </div>
-        <div className="p-4 border-t border-indigo-950/80">
+        <div className="p-4 border-t border-indigo-950/80 space-y-2">
+          <PWAInstallButton variant="sidebar" label="Pasang di Layar HP" />
           <button 
             onClick={onLogout} 
             className="w-full flex items-center gap-3 px-4 py-3 text-rose-400 hover:text-white hover:bg-rose-500/20 border border-transparent hover:border-rose-500/30 rounded-xl transition-all font-semibold text-sm"

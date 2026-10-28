@@ -86,6 +86,12 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="flex items-center space-x-2 shrink-0">
+        {/* Official SIAP GURU App Icon Badge */}
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-[#0E1A3C] border border-slate-200 dark:border-indigo-950 shadow-2xs">
+          <img src="/pwa-192x192.png" alt="Logo SIAP GURU" className="w-5 h-5 rounded-md object-cover bg-white" />
+          <span className="hidden sm:inline text-xs font-black text-slate-800 dark:text-white tracking-tight">SIAP GURU</span>
+        </div>
+
         {/* Firebase Live Status Badge */}
         <div
           className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-semibold shadow-xs transition-colors ${

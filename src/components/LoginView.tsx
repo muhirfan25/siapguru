@@ -306,11 +306,21 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onBack }) 
       <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-700">
         <div className="p-8 pb-6 text-center">
           <div className="flex justify-center mb-4">
-            <SiapGuruLogo size="xl" variant="icon" />
+            <div className="relative group">
+              <img 
+                src="/pwa-192x192.png" 
+                alt="Logo Resmi SIAP GURU" 
+                className="w-20 h-20 rounded-2xl shadow-xl shadow-blue-500/25 border-2 border-white dark:border-slate-700 object-cover bg-white" 
+              />
+              <span className="absolute -bottom-1 -right-1 flex h-4 w-4">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-white dark:border-slate-900"></span>
+              </span>
+            </div>
           </div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/70 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold mb-2 shadow-xs">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 dark:bg-indigo-950/60 border border-blue-200/80 dark:border-indigo-800 text-blue-700 dark:text-blue-300 text-xs font-bold mb-2 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
-            SIAP GURU (SG)
+            SIAP GURU
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-1">Selamat Datang</h2>
           <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Sistem Informasi Administrasi & Perangkat Guru</p>

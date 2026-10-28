@@ -20,10 +20,12 @@ import {
   BrainCircuit,
   Key,
   HardDriveDownload,
-  Info
+  Info,
+  Smartphone
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { PWAInstallButton } from './PWAInstallButton';
 import { Pengaturan } from '../types';
 import Swal from 'sweetalert2';
 
@@ -217,6 +219,28 @@ export const PanduanAplikasiView: React.FC<PanduanAplikasiViewProps> = ({ config
         {
           title: 'Pemulihan Data (Restore)',
           content: 'File JSON cadangan dapat dipulihkan kapan saja dengan satu klik untuk mengembalikan data jika terjadi kendala pada perangkat pengguna.'
+        }
+      ]
+    },
+    {
+      id: 'instalasi_pwa',
+      badge: 'PWA Mobile & Desktop',
+      title: 'Panduan Pasang Aplikasi di Layar Utama HP (PWA Home Screen)',
+      icon: Smartphone,
+      color: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800',
+      desc: 'Cara menyimpan ikon resmi SIAP GURU ke layar HP (Android & iPhone) atau komputer desktop tanpa melalui Play Store.',
+      items: [
+        {
+          title: 'Cara Pasang di HP Android (Google Chrome)',
+          content: '1. Buka website di Google Chrome. 2. Ketuk ikon Titik Tiga (⋮) di pojok kanan atas layar browser Chrome. 3. Pilih menu "Tambahkan ke Layar Utama" atau "Instal Aplikasi". 4. Ketuk "Instal". Ikon SIAP GURU langsung muncul di Home Screen HP Anda.'
+        },
+        {
+          title: 'Cara Pasang di iPhone / iPad (Safari)',
+          content: '1. Buka website di browser Safari. 2. Ketuk tombol Bagikan / Share (ikon kotak panah ke atas) di bilah bawah Safari. 3. Gulir ke bawah dan pilih "Tambahkan ke Layar Utama" (Add to Home Screen). 4. Ketuk "Tambah" di pojok kanan atas.'
+        },
+        {
+          title: 'Cara Pasang di Laptop / Komputer (Chrome / Edge)',
+          content: '1. Buka website di Chrome atau Microsoft Edge. 2. Perhatikan bagian kanan pada Address Bar (kolom URL browser), klik ikon "Instal Aplikasi". 3. Pilih "Instal". Aplikasi akan berjalan dalam jendela mandiri seperti aplikasi desktop.'
         }
       ]
     },

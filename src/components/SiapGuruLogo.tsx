@@ -15,99 +15,30 @@ export const SiapGuruLogo: React.FC<SiapGuruLogoProps> = ({
 }) => {
   // Size mappings for the icon emblem
   const sizeMap = {
-    xs: { box: 'w-7 h-7', svg: 'w-5 h-5', text: 'text-sm', sub: 'text-[9px]' },
-    sm: { box: 'w-9 h-9', svg: 'w-6 h-6', text: 'text-base', sub: 'text-[10px]' },
-    md: { box: 'w-12 h-12', svg: 'w-8 h-8', text: 'text-xl', sub: 'text-xs' },
-    lg: { box: 'w-16 h-16', svg: 'w-11 h-11', text: 'text-2xl', sub: 'text-sm' },
-    xl: { box: 'w-20 h-20', svg: 'w-14 h-14', text: 'text-3xl', sub: 'text-base' },
-    '2xl': { box: 'w-24 h-24', svg: 'w-16 h-16', text: 'text-4xl', sub: 'text-lg' },
+    xs: { box: 'w-7 h-7', text: 'text-sm', sub: 'text-[9px]' },
+    sm: { box: 'w-9 h-9', text: 'text-base', sub: 'text-[10px]' },
+    md: { box: 'w-12 h-12', text: 'text-xl', sub: 'text-xs' },
+    lg: { box: 'w-16 h-16', text: 'text-2xl', sub: 'text-sm' },
+    xl: { box: 'w-20 h-20', text: 'text-3xl', sub: 'text-base' },
+    '2xl': { box: 'w-24 h-24', text: 'text-4xl', sub: 'text-lg' },
   };
 
   const currentSize = sizeMap[size];
 
-  // The Aesthetic SVG Emblem for "SG" (Siap Guru)
+  // The Official Icon Emblem for SIAP GURU (Uploaded Image Asset)
   const Emblem = (
     <div
-      className={`relative ${currentSize.box} rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-indigo-800 p-[1.5px] shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:shadow-indigo-500/40 hover:scale-105 group select-none flex items-center justify-center`}
+      className={`relative ${currentSize.box} rounded-2xl p-[1px] shadow-md shadow-blue-500/20 transition-all duration-300 hover:scale-105 group select-none flex items-center justify-center shrink-0`}
     >
-      {/* Outer ambient glow */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-cyan-400/20 via-blue-500/20 to-purple-500/30 blur-[6px] opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
-      {/* Inner Surface with glassy depth */}
-      <div className="relative w-full h-full rounded-[14px] bg-gradient-to-br from-indigo-900/90 via-slate-900/95 to-indigo-950/90 backdrop-blur-md flex items-center justify-center overflow-hidden border border-white/15">
-        {/* Subtle geometric lines in background */}
-        <svg
-          viewBox="0 0 100 100"
-          className="absolute inset-0 w-full h-full opacity-15 pointer-events-none"
-          fill="none"
-        >
-          <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" className="text-blue-300" strokeDasharray="3 3" />
-          <path d="M15 85 L85 15" stroke="currentColor" strokeWidth="1" className="text-cyan-300" />
-        </svg>
-
-        {/* Master Monogram SG SVG Vector */}
-        <svg
-          viewBox="0 0 100 100"
-          className={`${currentSize.svg} text-white drop-shadow-[0_2px_8px_rgba(59,130,246,0.5)]`}
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <linearGradient id="sgGradPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#38BDF8" /> {/* Cyan 400 */}
-              <stop offset="50%" stopColor="#60A5FA" /> {/* Blue 400 */}
-              <stop offset="100%" stopColor="#818CF8" /> {/* Indigo 400 */}
-            </linearGradient>
-            <linearGradient id="sgGradGold" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F59E0B" />
-              <stop offset="100%" stopColor="#FDE047" />
-            </linearGradient>
-            <linearGradient id="sgGradAccent" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#FFFFFF" />
-              <stop offset="100%" stopColor="#BAE6FD" />
-            </linearGradient>
-          </defs>
-
-          {/* Letter 'S' - Dynamic Modern Streamlined Curve */}
-          <path
-            d="M 44 26 C 36 24 23 27 23 37 C 23 48 45 46 45 57 C 45 66 33 68 24 65 C 21 64 19 62 19 62"
-            stroke="url(#sgGradAccent)"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-
-          {/* Letter 'G' - Bold Geometric Curve interlocked */}
-          <path
-            d="M 77 34 C 73 26 62 23 53 25 C 40 28 35 40 35 52 C 35 66 45 76 60 76 C 73 76 80 67 80 55 L 61 55"
-            stroke="url(#sgGradPrimary)"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-
-          {/* Education & AI Cap / Star Sparkle at Top Right */}
-          <path
-            d="M 80 18 L 82 23 L 87 25 L 82 27 L 80 32 L 78 27 L 73 25 L 78 23 Z"
-            fill="url(#sgGradGold)"
-          />
-
-          {/* Ready Checkmark / Forward Chevron embedded */}
-          <path
-            d="M 50 83 L 56 89 L 68 79"
-            stroke="#38BDF8"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.9"
-          />
-        </svg>
-
-        {/* Micro sparkle in top right corner */}
-        {showSparkle && (
-          <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8] animate-pulse" />
-        )}
-      </div>
+      <img
+        src="/pwa-192x192.png"
+        alt="Logo Resmi SIAP GURU"
+        className="w-full h-full object-cover rounded-xl shadow-xs border border-white/50 dark:border-slate-700 bg-white"
+        loading="eager"
+      />
+      {showSparkle && (
+        <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-white dark:border-slate-900 shadow-[0_0_8px_#10b981]" />
+      )}
     </div>
   );
 
@@ -132,12 +63,12 @@ export const SiapGuruLogo: React.FC<SiapGuruLogoProps> = ({
             <span className="font-extrabold text-slate-900 dark:text-white tracking-tight text-sm">
               SIAP GURU
             </span>
-            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/80 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800">
-              SG
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800">
+              Aplikasi Resmi
             </span>
           </div>
           <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none mt-0.5">
-            Sistem Administrasi & Perangkat
+            Sistem Administrasi &amp; Perangkat
           </span>
         </div>
       </div>
@@ -156,7 +87,7 @@ export const SiapGuruLogo: React.FC<SiapGuruLogoProps> = ({
           <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shadow-[0_0_8px_rgba(37,99,235,0.7)]" />
         </div>
         <span className={`font-semibold text-slate-600 dark:text-slate-300 tracking-normal ${currentSize.sub}`}>
-          Sistem Informasi Administrasi & Perangkat Guru
+          Sistem Informasi Administrasi &amp; Perangkat Guru
         </span>
       </div>
     </div>
